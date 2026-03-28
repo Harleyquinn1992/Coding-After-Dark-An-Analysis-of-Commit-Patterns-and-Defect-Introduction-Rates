@@ -2,16 +2,18 @@
 Search github for top repos accross top languages
 """
 
+import github
 from github import Github
 from dotenv import load_dotenv
 import os, time
 
 load_dotenv()
-g = Github(os.getenv("GITHUB_TOKEN"))
+g = Github(auth=github.Auth.Token(os.getenv("GITHUB_TOKEN")))
 
 # top lanuages to sample
 LANGUAGES = ["python", "java", "javascript", "C", "C++"]
 REPOS_PER_LANGUAGE=100
+
 
 output_file = "repos.txt"
 collected = []
@@ -19,11 +21,11 @@ collected = []
 def is_qualified(repo):
     # not a fork
     if repo.fork:
-        return False
+        return False, "is a fork"
     
     # blacklist
     name = (repo.name).lower()
-    blacklist = ["awesome", "tutorial", "learning", "beginner"
+    blacklist = ["awesome", "tutorial", "learning", "beginner",
                  "course", "guide", "cheatsheet", "interview"]
 
     for word in blacklist:
@@ -35,7 +37,7 @@ def is_qualified(repo):
 for lang in LANGUAGES:
     
     # criteria
-    query = f"stars:>3000 forks:>500 languages{lang} pushed:> 2024-01-01"
+    query = f"stars:>=3000 forks:>=500 language:{lang} pushed:>=2025-01-01"
     results = g.search_repositories(query=query, sort="updated", order="desc")
 
     for repo in results:
@@ -44,7 +46,7 @@ for lang in LANGUAGES:
             print(f"Not taking {repo.full_name} - {reason}")
             continue
 
-        collected.append(repo.fullname)
+        collected.append(repo.full_name)
         time.sleep(0.5) # mercy to the API call
 
 # save to file
