@@ -1,8 +1,7 @@
 """
-STEP 2 — Commit Collector
-Reads repos.txt and pulls up to 500 commits per repo within the date range.
-Saves everything raw to commits.csv — no time filtering here, that happens in analysis.
-Run overnight — takes ~10 hours for 100 repos x 500 commits.
+Commit Collector
+Reads repos.txt and pulls up to 500 commits 
+Saves everything to commits.csv
 """
 
 from github import Github
@@ -13,15 +12,10 @@ from datetime import datetime, timezone
 load_dotenv()
 g = Github(os.getenv("GITHUB_TOKEN"))
 
-# ---------------------------------------------------------------
-# DATE RANGE — adjust these to control how fresh your data is
-# Recommendation: 2 years back gives you rich, recent data
-# without hitting ancient commits that may lack context
-# ---------------------------------------------------------------
-DATE_FROM = datetime(2022, 1, 1, tzinfo=timezone.utc)   # start: Jan 1 2022
-DATE_TO   = datetime(2024, 12, 31, tzinfo=timezone.utc) # end:   Dec 31 2024
+DATE_FROM = datetime(2024, 1, 1, tzinfo=timezone.utc) 
+DATE_TO   = datetime(2025, 12, 31, tzinfo=timezone.utc)
 
-# Max commits to pull per repo — 500 is enough for statistical validity
+# max commits
 COMMIT_LIMIT = 500
 
 # Files
@@ -29,9 +23,7 @@ REPOS_FILE      = "repos.txt"
 OUTPUT_CSV      = "commits.csv"
 CHECKPOINT_FILE = "collected_repos.txt"
 
-# ---------------------------------------------------------------
-# Checkpoint helpers — so a crash doesn't make you start over
-# ---------------------------------------------------------------
+# Checkpoint helpers — in case theres a crash
 def already_collected(repo_name):
     if not os.path.exists(CHECKPOINT_FILE):
         return False
@@ -42,9 +34,8 @@ def mark_collected(repo_name):
     with open(CHECKPOINT_FILE, "a") as f:
         f.write(repo_name + "\n")
 
-# ---------------------------------------------------------------
+
 # Load repo list
-# ---------------------------------------------------------------
 if not os.path.exists(REPOS_FILE):
     print(f"ERROR: {REPOS_FILE} not found. Run 1_select_repos.py first.")
     exit()
@@ -52,13 +43,10 @@ if not os.path.exists(REPOS_FILE):
 with open(REPOS_FILE) as f:
     repo_list = [line.strip() for line in f if line.strip()]
 
-print(f"Loaded {len(repo_list)} repos from {REPOS_FILE}")
-print(f"Date range: {DATE_FROM.date()} to {DATE_TO.date()}")
 print(f"Commit limit per repo: {COMMIT_LIMIT}\n")
 
-# ---------------------------------------------------------------
+
 # Main collection loop
-# ---------------------------------------------------------------
 write_header = not os.path.exists(OUTPUT_CSV)
 
 with open(OUTPUT_CSV, "a", newline="", encoding="utf-8") as f:
