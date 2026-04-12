@@ -1,3 +1,4 @@
 .env
 commits.csv
 repos.txt
+*.csv
