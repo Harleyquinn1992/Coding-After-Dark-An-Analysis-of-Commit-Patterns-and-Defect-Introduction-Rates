@@ -8,13 +8,17 @@ Reads commits_ai_classified.csv and performs:
 
 import pandas as pd
 import numpy as np
+import matplotlib
+matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 import seaborn as sns
 from scipy import stats
 import os
 
+matplotlib.use("Agg")
+
 # CONFIG
-INPUT_CSV = "ai_classifiedc_ommits.csv"
+INPUT_CSV = "ai_classified_commits.csv"
 PLOTS_DIR = "plots"
 os.makedirs(PLOTS_DIR, exist_ok=True)
 
