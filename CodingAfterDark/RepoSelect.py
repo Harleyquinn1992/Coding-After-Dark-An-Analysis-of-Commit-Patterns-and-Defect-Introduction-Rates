@@ -10,7 +10,7 @@ import os, time
 load_dotenv()
 g = Github(auth=github.Auth.Token(os.getenv("GITHUB_TOKEN")))
 
-# top lanuages to sample
+# choose language
 LANGUAGES = ["python", "java", "javascript", "c", "c++"]
 REPOS_PER_LANGUAGE=20
 
