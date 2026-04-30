@@ -22,7 +22,7 @@ location_cache = {}
 
 geocode = RateLimiter(
     geolocator.geocode,
-    min_delay_seconds=2,    # 2 seconds between requests
+    min_delay_seconds=2,     # 2 seconds between requests
     max_retries=3,           # retry 3 times
     error_wait_seconds=10    # wait 10 sec if a 429 error
 )
@@ -72,7 +72,7 @@ def convert_to_local(utc_ts_str, tz_str):
 
 
 """
-For later analysis
+For analysis
 """
 def assign_time_bucket(hour):
     if hour is None:
