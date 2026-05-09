@@ -1,0 +1,123 @@
+
+Loaded 45,142 commits
+
+4A — BASIC STATISTICS
+
+
+Timezone resolved:  22,334 / 45,142 (49.5%)
+UTC fallback:       22,808 commits
+
+Commits per time bucket:
+  0-4: late night            4,606  (10.2%)
+  4-9: early morning         5,698  (12.6%)
+  9-17: work hours          19,815  (43.9%)
+  evening                    9,518  (21.1%)
+  night                      5,505  (12.2%)
+
+Repos covered:      99
+Unique authors:     5227
+Date range:         2017-10-11 to 2025-12-30
+
+AI Classification Summary:
+  Avg urgency score:  3.96 / 10
+  Avg clarity score:  5.74 / 10
+  Rushed commits:     13,781 (30.5%)
+  Hedging commits:    971 (2.2%)
+
+Category breakdown:
+  chore           13,473  (29.8%)
+  bug_fix         12,576  (27.9%)
+  other            6,369  (14.1%)
+  feature          6,256  (13.9%)
+  refactor         3,877  (8.6%)
+  docs             1,718  (3.8%)
+  test               853  (1.9%)
+  optimization        10  (0.0%)
+  perf                10  (0.0%)
+
+4B — STATISTICAL HYPOTHESIS TESTING
+
+
+Comparing:
+  Late night  (00:00-04:00): 4,606 commits
+  Core hours  (09:00-17:00): 19,815 commits
+
+--- Continuous Features (Mann-Whitney U) ---
+
+  Urgency Score
+    Late night mean:  3.835
+    Core hours mean:  3.997
+    p-value:          0.0000  SIGNIFICANT
+    Effect size (r):  0.049
+
+  Clarity Score
+    Late night mean:  5.660
+    Core hours mean:  5.789
+    p-value:          0.0002  SIGNIFICANT
+    Effect size (r):  0.035
+
+  Message Length
+    Late night mean:  30.261
+    Core hours mean:  31.670
+    p-value:          0.0000  SIGNIFICANT
+    Effect size (r):  0.062
+
+--- Binary Features (Chi-Square) ---
+
+  Rushed Commits
+    Late night rate:  31.9%
+    Core hours rate:  29.4%
+    p-value:          0.0009  SIGNIFICANT
+
+  Hedging Language
+    Late night rate:  1.9%
+    Core hours rate:  2.3%
+    p-value:          0.0914  not significant
+
+--- Bonferroni Corrected Threshold: p < 0.0083 ---
+  Urgency Score        p=0.0000  survives correction
+  Clarity Score        p=0.0002  survives correction
+  Message Length       p=0.0000  survives correction
+  Rushed Commits       p=0.0009  survives correction
+  Hedging Language     p=0.0914  ❌ does not survive
+
+4C — GENERATING VISUALIZATIONS
+
+
+  Plot 1: Commit activity by hour...
+  Saved: 1_commit_activity_by_hour.png
+  Plot 2: Urgency by time bucket...
+/home/kevintran/693/CodingAfterDark/Analyze.py:187: FutureWarning: 
+
+Passing `palette` without assigning `hue` is deprecated and will be removed in v0.14.0. Assign the `x` variable to `hue` and set `legend=False` for the same effect.
+
+  sns.boxplot(
+/home/kevintran/693/CodingAfterDark/Analyze.py:196: UserWarning: set_ticklabels() should only be used with a fixed number of ticks, i.e. after set_ticks() or using a FixedLocator.
+  ax.set_xticklabels(ax.get_xticklabels(), rotation=15, ha="right")
+  Saved: 2_urgency_by_bucket.png
+  Plot 3: Clarity by time bucket...
+/home/kevintran/693/CodingAfterDark/Analyze.py:205: FutureWarning: 
+
+Passing `palette` without assigning `hue` is deprecated and will be removed in v0.14.0. Assign the `x` variable to `hue` and set `legend=False` for the same effect.
+
+  sns.boxplot(
+/home/kevintran/693/CodingAfterDark/Analyze.py:214: UserWarning: set_ticklabels() should only be used with a fixed number of ticks, i.e. after set_ticks() or using a FixedLocator.
+  ax.set_xticklabels(ax.get_xticklabels(), rotation=15, ha="right")
+  Saved: 3_clarity_by_bucket.png
+  Plot 4: Rushed rate by time bucket...
+/home/kevintran/693/CodingAfterDark/Analyze.py:232: UserWarning: set_ticklabels() should only be used with a fixed number of ticks, i.e. after set_ticks() or using a FixedLocator.
+  ax.set_xticklabels(rushed_rate.index, rotation=15, ha="right")
+  Saved: 4_rushed_by_bucket.png
+  Plot 6: Urgency heatmap by hour and day...
+  Saved: 6_urgency_heatmap.png
+
+ANALYSIS COMPLETE
+
+
+Plots explained:
+
+  1_commit_activity_by_hour.png  — when do developers commit?
+  2_urgency_by_bucket.png        — are late night commits more urgent?
+  3_clarity_by_bucket.png        — are late night messages less clear?
+  4_rushed_by_bucket.png         — are late night commits more rushed?
+  5_urgency_heatmap.png          — urgency by hour AND day of week
